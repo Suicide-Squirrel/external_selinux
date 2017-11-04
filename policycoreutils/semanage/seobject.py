@@ -210,7 +210,7 @@ class semanageRecords:
 
     def __init__(self, store):
         global handle
-        self.load = True
+        self.load = selinux.is_selinux_enabled()
         self.sh = self.get_handle(store)
 
         rc, localstore = selinux.selinux_getpolicytype()
@@ -220,7 +220,7 @@ class semanageRecords:
             self.mylog = nulllogger()
 
     def set_reload(self, load):
-        self.load = load
+        self.load = selinux.is_selinux_enabled() and load
 
     def get_handle(self, store):
         global is_mls_enabled
